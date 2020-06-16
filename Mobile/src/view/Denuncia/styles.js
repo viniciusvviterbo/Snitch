@@ -51,10 +51,18 @@ export default StyleSheet.create({
         fontWeight: 'bold',
     },
 
-    formTxt: {
+    formText: {
         marginTop: 8,
         fontSize: 15,
-        marginBottom: 24,
+        marginBottom: 32,
+        color: '#737380',
+        height: 34,
+    },
+
+    formTxtBox: {
+        marginTop: 8,
+        fontSize: 15,
+        marginBottom: 16,
         color: '#737380',
         height: 24,
     },
