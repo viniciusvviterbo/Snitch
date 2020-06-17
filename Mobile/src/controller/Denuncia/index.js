@@ -9,7 +9,6 @@ import * as Location from 'expo-location';
 import ApiKeys from '../../model/Denuncia';
 
 import database from '@react-native-firebase/database';
-import * as firebase from 'firebase';
 
 let flag = false;
 

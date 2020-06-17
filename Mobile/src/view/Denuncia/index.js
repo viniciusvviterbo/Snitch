@@ -65,17 +65,6 @@ export default function Denuncia() {
         setHorario(moment().format('LLL'));
     }
 
-    function realizarDenuncia() {
-        const denuncia = {
-            evento = nomeEvento,
-            local = localizacao,
-            datetime = horario,
-            nomeanexo = nomeArquivo,
-            anexo = arquivo.base64 ? arquivo.base64 : arquivo.uri
-        };
-
-        registrarDenuncia(denuncia);
-    }
 
     useEffect(() => {
         (async () => {
@@ -104,7 +93,7 @@ export default function Denuncia() {
         (cameraEmUso) ?
         (
             <View style={{ flex: 1 }}>
-                <Camera style={{ flex: 1 }} type={cameraType} ref={ref => { console.log('cameraRef\n\n\n'); setCameraRef(ref); }}>
+                <Camera style={{ flex: 1 }} type={cameraType} ref={ref => { setCameraRef(ref); }}>
                     
                     <View>
                         <TouchableOpacity style={{ marginTop: Constants.statusBarHeight + 20, marginLeft: 20 }} onPress={() => {
@@ -124,11 +113,12 @@ export default function Denuncia() {
                             <TouchableOpacity style={{alignSelf: 'center'}} onPress={ async() => {
                             if(!recording) {
                                 setRecording(true);
-                                let video = cameraRef.recordAsync().then( data =>{
-                                    setArquivo(data);
-                                    let extencao = data.uri.substr(video.uri.lastIndexOf('.'));
-                                    setNomeArquivo('snitch_vid_' + horario + extencao);
-                                });
+                                let video = cameraRef.recordAsync();
+                                setArquivo(video);
+                                let extencao = video.uri.substr(data.uri.lastIndexOf('.'));
+                                setNomeArquivo('snitch_vid_' + horario + extencao);
+                                setArquivoFoiSelecionado(true);
+                                setCameraEmUso(false);
                                 console.log('video', video);
                             }
                             else {
@@ -140,11 +130,12 @@ export default function Denuncia() {
 
                             <TouchableOpacity style={{alignSelf: 'center'}} onPress={async() => {
                             if(cameraRef){
-                                let photo = await cameraRef.takePictureAsync().then( data => {
-                                    setArquivo(data);
-                                    let extencao = data.uri.substr(video.uri.lastIndexOf('.'));
-                                    setNomeArquivo('snitch_pic_' + horario + extencao);
-                                });
+                                let photo = await cameraRef.takePictureAsync();
+                                setArquivo(photo);
+                                let extencao = photo.uri.substr(photo.uri.lastIndexOf('.'));
+                                setNomeArquivo('snitch_pic_' + horario + extencao);
+                                setArquivoFoiSelecionado(true);
+                                setCameraEmUso(false);
                                 console.log('photo', photo);
                             }}}>
                                 <Feather name='camera' size={40} color={'#FFF'} />
@@ -186,14 +177,14 @@ export default function Denuncia() {
     
                     <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
                         <Text style={styles.formLabel}>Anexar arquivo:</Text>
-                        <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#e02041', borderRadius: 8, height: 32, width: '55%', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={() => {setCameraEmUso(true)}}>
+                        <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#e02041', borderRadius: 8, height: 32, width: '60%', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={() => {setCameraEmUso(true)}}>
                             {
                                 /*
                                  * Implementação do design pattern decorator pois o estado desse botão em tempo de execução é alterado, mostrando um ícone ou o nome do arquivo
                                  */
                                 arquivoFoiSelecionado
-                                ? <Text style={{ marginTop: 8,
-                                    fontSize: 15,
+                                ? <Text style={{ marginTop: 21,
+                                    fontSize: 9,
                                     color: '#FFF',
                                     height: 34,}}>{nomeArquivo}</Text>
                                 : <Feather name='file' size={20} color={'#FFF'}/>
@@ -202,12 +193,11 @@ export default function Denuncia() {
                     </View>
                 </View>
     
-                <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#e02041', borderRadius: 8, height: 32, width: '55%', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={() => { realizarDenuncia() }}>
-                        <Text style={{  marginTop: 8,
-                                        fontSize: 15,
-                                        color: '#FF0000',
-                                        height: 34,}}>Enviar denúncia</Text>
+                <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', marginTop: 24 }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#e02041', borderRadius: 8, height: 80, width: '100%', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={() => { registrarDenuncia(nomeEvento, localizacao, horario, nomeArquivo, arquivo.base64 ? arquivo.base64 : arquivo.uri); }}>
+                        <Text style={{  marginBottom: 14, fontSize: 32, color: '#FFF', height: 34, fontWeight: 'bold'}}>
+                            Enviar denúncia
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
