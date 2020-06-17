@@ -4,8 +4,8 @@ Esse app foi desenvolvido com o intuito de promover o distanciamento social dura
 
 Essa aplicação foi construída utilizando o framework [React Native](https://reactnative.dev/), utilizando da linguagem de programação [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), e consome a [API OpenCage Geocoder](https://opencagedata.com/api) para converter as coordenadas geográficas coletadas pelo dispositivo móvel para um endereço facilmente legível.
 
-Os diagramas do projeto se encontram em
-```
+Para acessar os diagramas do projeto, que se encontram no repositório, acesse o diretório
+```shell
 Snitch/Diagramas/
 ```
 
@@ -14,7 +14,7 @@ Snitch/Diagramas/
 ## Dependências, Teste e Desenvolvimento
 
 1. Clone esse repositório
-```
+```Shell
 git clone github.com/viniciusvviterbo/Snitch
 ```
 2. Instale as dependências do projeto 
