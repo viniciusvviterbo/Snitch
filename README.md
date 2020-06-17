@@ -6,7 +6,7 @@ Essa aplicação foi construída utilizando o framework [React Native](https://r
 
 Para acessar os diagramas do projeto, que se encontram no repositório, acesse o diretório
 ```shell
-Snitch/Diagramas/
+cd Snitch/Diagramas/
 ```
 
 ![Divisor](https://user-images.githubusercontent.com/24854541/84849405-9221ea80-b02b-11ea-8010-8ddcd72b575f.png)
