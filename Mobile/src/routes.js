@@ -6,9 +6,10 @@ const AppStack = createStackNavigator();
 
 import Denuncia from './view/Denuncia';
 
-// <Feather name="" size={16} color='#E02041'/>
-
 export default function Routes() {
+    /*
+     * Implementação do design pattern singleton devido à instanciação única da view, que por sua vez, tem seus estados alterados para alcançar a finalidade da aplicação
+     */
     return(
         <NavigationContainer>
             <AppStack.Navigator screenOptions={{headerShown:false}}>

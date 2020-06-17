@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import {  } from '../../controller/Denuncia';
+import { registrarDenuncia } from '../../controller/Denuncia';
 
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
@@ -20,7 +20,8 @@ export default function Denuncia() {
     const [localizacao, setLocalizacao] = useState(null);
     const [horario, setHorario] = useState(null);
     const [nomeArquivo, setNomeArquivo] = useState('Arquivo');
-    
+    const [arquivo, setArquivo] = useState(null);
+
     const [hasPermission, setHasPermission] = useState(null);
     const [cameraRef, setCameraRef] = useState(null);
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
@@ -64,6 +65,18 @@ export default function Denuncia() {
         setHorario(moment().format('LLL'));
     }
 
+    function realizarDenuncia() {
+        const denuncia = {
+            evento = nomeEvento,
+            local = localizacao,
+            datetime = horario,
+            nomeanexo = nomeArquivo,
+            anexo = arquivo.base64 ? arquivo.base64 : arquivo.uri
+        };
+
+        registrarDenuncia(denuncia);
+    }
+
     useEffect(() => {
         (async () => {
             const { status, expires, permissions } = await Permissions.askAsync(
@@ -76,7 +89,7 @@ export default function Denuncia() {
             setInitialFields();
         })();
     }, []);
-    
+
     if (hasPermission === null) {
         return <View />;
     }
@@ -84,8 +97,10 @@ export default function Denuncia() {
         return <Text>As permissões de acesso necessárias foram negadas pelo usuário.</Text>;
     }
     
-
     return (
+        /*
+         * Implementação do design pattern observer pois fica observando se a flag que indica o uso da câmera está levantada, e atualiza a tela inteira caso esteja
+         */
         (cameraEmUso) ?
         (
             <View style={{ flex: 1 }}>
@@ -110,8 +125,9 @@ export default function Denuncia() {
                             if(!recording) {
                                 setRecording(true);
                                 let video = cameraRef.recordAsync().then( data =>{
-                                    //let extencao = video.uri.substr(video.uri.lastIndexOf('.'));
-                                    setNomeArquivo(data.uri);                     
+                                    setArquivo(data);
+                                    let extencao = data.uri.substr(video.uri.lastIndexOf('.'));
+                                    setNomeArquivo('snitch_vid_' + horario + extencao);
                                 });
                                 console.log('video', video);
                             }
@@ -124,7 +140,11 @@ export default function Denuncia() {
 
                             <TouchableOpacity style={{alignSelf: 'center'}} onPress={async() => {
                             if(cameraRef){
-                                let photo = await cameraRef.takePictureAsync();
+                                let photo = await cameraRef.takePictureAsync().then( data => {
+                                    setArquivo(data);
+                                    let extencao = data.uri.substr(video.uri.lastIndexOf('.'));
+                                    setNomeArquivo('snitch_pic_' + horario + extencao);
+                                });
                                 console.log('photo', photo);
                             }}}>
                                 <Feather name='camera' size={40} color={'#FFF'} />
@@ -157,6 +177,7 @@ export default function Denuncia() {
                                     marginBottom: 16,
                                     color: '#737380',
                                     height: 34,}}>{localizacao}</Text>
+                    
                     <Text style={styles.formLabel}>Hora:</Text>
                     <Text style={{  marginTop: 8,
                                     fontSize: 15,
@@ -166,18 +187,30 @@ export default function Denuncia() {
                     <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
                         <Text style={styles.formLabel}>Anexar arquivo:</Text>
                         <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#e02041', borderRadius: 8, height: 32, width: '55%', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={() => {setCameraEmUso(true)}}>
-                            {arquivoFoiSelecionado
-                                ? <Feather name='file' size={20} color={'#FFF'}/>
-                                : <Text style={{ marginTop: 8,
-                                        fontSize: 15,
-                                        color: '#FFF',
-                                        height: 34,}}>{nomeArquivo}</Text>
+                            {
+                                /*
+                                 * Implementação do design pattern decorator pois o estado desse botão em tempo de execução é alterado, mostrando um ícone ou o nome do arquivo
+                                 */
+                                arquivoFoiSelecionado
+                                ? <Text style={{ marginTop: 8,
+                                    fontSize: 15,
+                                    color: '#FFF',
+                                    height: 34,}}>{nomeArquivo}</Text>
+                                : <Feather name='file' size={20} color={'#FFF'}/>
                             }
                         </TouchableOpacity>
                     </View>
-    
                 </View>
     
+                <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#e02041', borderRadius: 8, height: 32, width: '55%', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={() => { realizarDenuncia() }}>
+                        <Text style={{  marginTop: 8,
+                                        fontSize: 15,
+                                        color: '#FF0000',
+                                        height: 34,}}>Enviar denúncia</Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
         )
     );

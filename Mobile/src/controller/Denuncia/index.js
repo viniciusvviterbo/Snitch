@@ -1,5 +1,15 @@
+/*
+ * Possui o padrão GRASP controlador porque utiliza a controller do MVC, que funciona como um intermediário entre a camada de visualização e a camada de dados.
+ * Possui o padrão GRASP Indireção porque atribui o objeto controller que é um intermediário entre a view e a entidade.
+ * Pelo fato de possuir indireção, possui o padrão GRASP baixo acoplamento, porque a separação entre model-view-controller promove a reutilização de código 
+ */
+
 import React from 'react';
 import * as Location from 'expo-location';
+import ApiKeys from '../../model/Denuncia';
+
+import database from '@react-native-firebase/database';
+import * as firebase from 'firebase';
 
 let flag = false;
 
@@ -53,4 +63,18 @@ export async function getEndereco() {
     }
     console.log('addr -\t' + addr);
     return addr;
+}
+
+export async function registrarDenuncia(obj) {
+    /*
+
+    obj : {
+        evento = nomeEvento,
+        local = localizacao,
+        datetime = horario,
+        nomeanexo = nomeArquivo,
+        anexo = arquivo.base64 ? arquivo.base64 : arquivo.uri;
+    };
+
+    */
 }
