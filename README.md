@@ -2,7 +2,7 @@
 
 Esse app foi desenvolvido com o intuito de promover o distanciamento social durante a pandemia causada pelo COVID-19. É uma ferramenta que pode ser utilizada para denunciar aglomerações e reuniões de pessoas de modo a violar a (já pouca) segurança da comunidade ao redor contra o vírus.
 
-Essa aplicação consome a [API OpenCage Geocoder](https://opencagedata.com/api) para converter as coordenadas geográficas coletadas pelo dispositivo móvel para um endereço facilmente legível.
+Essa aplicação foi construída utilizando o framework [React Native](https://reactnative.dev/), utilizando da linguagem de programação [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), e consome a [API OpenCage Geocoder](https://opencagedata.com/api) para converter as coordenadas geográficas coletadas pelo dispositivo móvel para um endereço facilmente legível.
 
 ![Divisor](https://user-images.githubusercontent.com/24854541/84849405-9221ea80-b02b-11ea-8010-8ddcd72b575f.png)
 
