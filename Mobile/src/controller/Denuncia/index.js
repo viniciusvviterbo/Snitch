@@ -8,8 +8,6 @@ import React from 'react';
 import * as Location from 'expo-location';
 import ApiKeys from '../../model/Denuncia';
 
-import database from '@react-native-firebase/database';
-
 let flag = false;
 
 export async function getAddress(latitude, longitude) {   

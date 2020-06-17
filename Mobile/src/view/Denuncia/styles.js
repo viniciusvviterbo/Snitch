@@ -66,4 +66,30 @@ export default StyleSheet.create({
         color: '#737380',
         height: 24,
     },
+
+    actions: {
+        padding: 24,
+        borderRadius: 8,
+        backgroundColor: '#FFF',
+        marginBottom: 8,
+        marginTop: 8,
+        flexDirection: 'row',
+    },
+
+    action: {
+        backgroundColor: '#35a329',
+        borderRadius: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        height: 50,
+        width: '60%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    actionText: {
+        color: '#FFF',
+        fontSize: 8,
+        fontWeight: 'bold',
+    }
 });
