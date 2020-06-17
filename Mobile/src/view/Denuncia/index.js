@@ -12,7 +12,6 @@ import { Feather } from '@expo/vector-icons';
 import logoImg from '../../assets/logo.png';
 import styles from './styles';
 import Constants from 'expo-constants';
-import { render } from 'react-dom';
 
 export default function Denuncia() {
 
