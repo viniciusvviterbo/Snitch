@@ -51,11 +51,4 @@ expo build:ios
 
 ![Divisor](https://user-images.githubusercontent.com/24854541/84849405-9221ea80-b02b-11ea-8010-8ddcd72b575f.png)
 
-**Contribuidores:**
-- [Vinícius V. Viterbo](https://www.github.com/viniciusvviterbo)
-- [Mateus Ferreira](https://github.com/MateusAlberto)
-- [Lincoln Coutinho](https://github.com/lincolncout)
-
-![Divisor](https://user-images.githubusercontent.com/24854541/84849405-9221ea80-b02b-11ea-8010-8ddcd72b575f.png)
-
 **[GNU AGPL v3.0](https://www.gnu.org/licenses/agpl-3.0.html)**
